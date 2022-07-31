@@ -1,0 +1,9 @@
+region         = "fra1"
+vpc_name       = "origin-trail"
+key_path       = "../ansible/files"
+key_name       = "sshkey"
+vm_instances   = 5
+vm_size        = "s-1vcpu-1gb"
+vm_image       = "ubuntu-20-04-x64"
+vm_name        = "origin-trail"
+inventory_path = "../ansible/inventories"

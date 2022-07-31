@@ -1,0 +1,4 @@
+[all]
+%{ for i in ips ~}
+origin-trail ${i} ansible_user=root
+%{ endfor }
