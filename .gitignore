@@ -23,3 +23,8 @@ devops/parachain/config/state
 
 # second interview
 .terraform/
+
+credentials.auto.tfvars
+credential.auto.tfvars
+terraform.tfstate
+terraform.tfstate.backup

@@ -8,11 +8,14 @@ name: Deployment
 on:
   push: 
     branches: 
-      - feature/second-interview 
+      - main
   
 env:
   DEPLOY_DIR: "terraform/"
   DIGITALOCEAN_TOKEN: ${{ secrets.Terraform_DO_PAT }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.Terraform_ACCESS_KEY }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.Terraform_SECRET_KEY }}
+  AWS_DEFAULT_REGION: eu-central-1
 
 jobs:
   linting-infrastructure:
@@ -124,4 +127,4 @@ jobs:
     - name: run the manganta deployment playbook
       working-directory: ./ansible
       run: |
-        ansible-playbook -i inventories/inventory.yml --extra-vars="ansible_ssh_private_key_file=${GITHUB_WORKSPACE}/ansible/files/sshkey.pem" playbook.yml
+        #ansible-playbook -i inventories/inventory.yml --extra-vars="ansible_ssh_private_key_file=${GITHUB_WORKSPACE}/ansible/files/sshkey.pem" playbook.yml
