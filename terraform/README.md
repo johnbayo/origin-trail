@@ -12,7 +12,7 @@ aws secret key<br/>
 ## Module Variables and Values
 <br/>
 Available values are listed below, along with variables. This can be configured as desired <br/>
-<br/>
+
 * vpc_name: the name of the default vpc<br/>
 * key_path: the path the ansible key will be stored<br/>
 * key_name: the name of the ssh private key<br/>
