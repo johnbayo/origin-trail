@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+
+  otnode:
+    image: origintrail/ot-node:{{ origin_trail_image_version }}
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 1g
+    ports:
+      - "8900:8900"
+      - "5278:5278"
+      - "3000:3000"
+    volumes:
+      - "{{ cert_path }}:/ot-node/certs"
+      - "{{ origin_trail_user }}/.origintrail_noderc:/ot-node/.origintrail_noderc"
+
+networks:
+  otnode:

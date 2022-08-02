@@ -11,8 +11,9 @@ terraform {
 #   VPC
 ###############################
 resource "digitalocean_vpc" "task_vpc" {
-  name   = var.vpc_name
-  region = var.region
+  count  = length(var.region)
+  name   = "${var.vpc_name}-${format("%02d", count.index + 1)}"
+  region = element(var.region, count.index % length(var.region))
   #ip_range = var.cidr
 }
 
@@ -38,13 +39,13 @@ resource "digitalocean_ssh_key" "task_key_pair" {
 # VM INSTANCE
 ##################################
 resource "digitalocean_droplet" "task_vm" {
-  count    = var.vm_instances
+  count    = length(var.region)
   name     = "${var.vm_name}-${format("%02d", count.index + 1)}"
   size     = var.vm_size
   image    = var.vm_image
-  region   = var.region
+  region   = element(var.region, count.index % length(var.region))
   ssh_keys = [digitalocean_ssh_key.task_key_pair.id]
-  vpc_uuid = digitalocean_vpc.task_vpc.id
+  vpc_uuid = element(digitalocean_vpc.task_vpc.*.id, count.index % length(var.region))
 }
 
 ##################################

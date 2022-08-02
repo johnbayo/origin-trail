@@ -1,19 +1,7 @@
 --- 
 # A list of users who will be added to the docker group.
-docker_users: [ubuntu]
+origin_trail_user: "root"
 
-mangata_user: "ubuntu"
+cert_path: /{{ origin_trail_user }}/certs
 
-mangata_directory_name: "devops"
-
-mangata_env: "second-interview"
-
-# Docker daemon options as a dict
-docker_daemon_options: {}
-
-deployment_path: /home/{{ mangata_user }}/{{ mangata_directory_name }}
-
-mangata_image_version: rococo-latest
-#docker-compose file
-stackcomponents:
-  - { name: 'second-interview', path: '{{ deployment_path }}/parachain/env/' }
+origin_trail_image_version: release_testnet

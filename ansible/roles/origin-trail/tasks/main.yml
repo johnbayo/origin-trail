@@ -1,34 +1,23 @@
 ---
-- name: create mangata deployment directory
-  file:
-    path: "{{ mangata_directory_name }}" 
-    state: directory
-    owner: ubuntu
-    group: ubuntu
-    mode: '0755'
+- name: Generate a Self Signed OpenSSL certificate
+  openssl_certificate:
+    path: "{{ cert_path }}/{{ ansible_hostname }}.crt"
+    privatekey_path: "{{ cert_path }}/{{ ansible_hostname }}.pem"
+    csr_path: "{{ cert_path }}/{{ ansible_hostname }}.csr"
+    provider: selfsigned
 
-- name: copy mangata deployment directory recursively to its path 
-  copy:
-    src: "../devops/"
-    dest: "{{ mangata_directory_name }}"
-    owner: ubuntu
-    group: ubuntu
-    mode: '0755'
-
-- name: Copying template files to designated directories 
+- name: Copying origin_trail configuration 
   template: 
-    src: "templates/{{ item.name }}.j2"
-    dest: "{{ item.path }}/{{ item.name }}"
-    owner: ubuntu
-    group: ubuntu
-    mode: 0755
-  loop: "{{ stackcomponents }}" 
+    src: "templates/origintrail.j2"
+    dest: "{{ origin_trail_user }}/.origintrail_noderc"
 
-- name: pulling the mangata node images
-  shell: "docker-compose --env-file {{ deployment_path }}/parachain/env/{{ mangata_env }} -f {{ deployment_path }}/parachain/docker-compose.yml pull" 
+- name: Copy docker-compose template
+  template: 
+    src: "templates/docker-compose.yml.j2"
+    dest: "{{ origin_trail_user }}/docker-compose.yml"
 
-- name: build image context 
-  shell: "docker-compose --env-file {{ deployment_path }}/parachain/env/{{ mangata_env }} -f {{ deployment_path }}/parachain/docker-compose.yml build"
+- name: pulling the origin_trail node images
+  shell: "docker-compose -f {{ origin_trail_user }}/docker-compose.yml pull" 
 
-- name: running the mangata node 
-  shell: "docker-compose --env-file {{ deployment_path }}/parachain/env/{{ mangata_env }} -f {{ deployment_path }}/parachain/docker-compose.yml up -d"
+#- name: running the origin_trail node 
+#  shell: "docker-compose -f {{ origin_trail_user }}/docker-compose.yml up -d"

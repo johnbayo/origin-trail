@@ -13,9 +13,6 @@ variable "key_path" {
 variable "key_name" {
 }
 
-variable "vm_instances" {
-}
-
 variable "vm_size" {
 }
 
