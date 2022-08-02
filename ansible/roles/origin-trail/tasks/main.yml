@@ -1,4 +1,19 @@
 ---
+- name: Allow all access to required tcp port
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop: "{{ required_ports }}"
+
+- name: enable UFW
+  ufw:
+    state: enabled
+
+- name: Set logging
+  ufw:
+    logging: 'on'
+
 - name: creating certs directory
   file:
     path: "{{ cert_path }}" 

@@ -1,6 +1,12 @@
 --- 
 origin_trail_user: "root"
 
+required_ports:
+    - 22
+    - 3000
+    - 5278
+    - 8900
+
 cert_path: /{{ origin_trail_user }}/certs
 
 key_size: 4096
