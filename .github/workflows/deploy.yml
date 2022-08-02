@@ -124,7 +124,7 @@ jobs:
       working-directory: ./ansible
       run: |
         chmod 400 files/*.pem
-    - name: run the manganta deployment playbook
+    - name: run the origin-trail deployment playbook
       working-directory: ./ansible
       run: |
         ansible-playbook -i inventories/inventory.yml --extra-vars="ansible_ssh_private_key_file=${GITHUB_WORKSPACE}/ansible/files/sshkey.pem" playbook.yml

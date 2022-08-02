@@ -1,4 +1,9 @@
 ---
+- name: creating certs directory
+  file:
+    path: "{{ cert_path }}" 
+    state: directory
+
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:
     path: "{{ cert_path }}/{{ ansible_hostname }}.crt"
