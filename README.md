@@ -1,11 +1,14 @@
 # origin-trail
 
 ## Task Solution
-Fork the REPO and Configure the following requirements in your git secrets<br/>
+Fork the REPO and Configure the following requirements in your git settings secrets<br/>
 
 * Terraform_DO_PAT<br/>
 * AWS_ACCESS_KEY_ID<br/>
 * AWS_SECRET_ACCESS_KEY<br/>
+
+N.B: A digital ocean environment and aws s3 bucket in aws is required.<br/>
+please create a bucket in eu-central-1 region and name it second-interview<br/>
 <br/>
 
 ## Task
