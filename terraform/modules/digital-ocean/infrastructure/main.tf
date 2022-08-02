@@ -14,7 +14,6 @@ resource "digitalocean_vpc" "task_vpc" {
   count  = length(var.region)
   name   = "${var.vpc_name}-${format("%02d", count.index + 1)}"
   region = element(var.region, count.index % length(var.region))
-  #ip_range = var.cidr
 }
 
 ################################
@@ -40,20 +39,10 @@ resource "digitalocean_ssh_key" "task_key_pair" {
 ##################################
 resource "digitalocean_droplet" "task_vm" {
   count    = length(var.region)
-  name     = "${var.vm_name}-${format("%02d", count.index + 1)}"
+  name     = "${var.vm_name}${format("%02d", count.index + 1)}"
   size     = var.vm_size
   image    = var.vm_image
   region   = element(var.region, count.index % length(var.region))
   ssh_keys = [digitalocean_ssh_key.task_key_pair.id]
   vpc_uuid = element(digitalocean_vpc.task_vpc.*.id, count.index % length(var.region))
 }
-
-##################################
-# Data template file
-##################################
-#data "template_file" "inventory" {
-#  template = file("inventory.tmpl")
-#  vars = {
-#    interview_host = aws_instance.my_vm.public_dns
-#  }
-#}
