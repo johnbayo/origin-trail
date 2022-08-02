@@ -14,8 +14,8 @@ services:
       - "5278:5278"
       - "3000:3000"
     volumes:
-      - "{{ cert_path }}:/ot-node/certs"
-      - "{{ origin_trail_user }}/.origintrail_noderc:/ot-node/.origintrail_noderc"
+      - "/{{ cert_path }}:/ot-node/certs"
+      - "/{{ origin_trail_user }}/.origintrail_noderc:/ot-node/.origintrail_noderc"
 
 networks:
   otnode:

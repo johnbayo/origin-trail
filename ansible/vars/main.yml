@@ -1,7 +1,16 @@
 --- 
-# A list of users who will be added to the docker group.
 origin_trail_user: "root"
 
 cert_path: /{{ origin_trail_user }}/certs
+
+key_size: 4096
+
+key_type: RSA
+
+country_name: DE
+
+email_address: john.bayo@web.de
+
+organization_name: origin-trail
 
 origin_trail_image_version: release_testnet

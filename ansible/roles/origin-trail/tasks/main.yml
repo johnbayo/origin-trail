@@ -4,6 +4,22 @@
     path: "{{ cert_path }}" 
     state: directory
 
+- name: Generate an OpenSSL private key
+  openssl_privatekey:
+    path: "{{ cert_path }}/{{ ansible_hostname }}.pem"
+    size: "{{ key_size }}"
+    type: "{{ key_type }}"
+    backup: yes
+
+- name: Generate an OpenSSL Certificate Signing Request with Subject information
+  openssl_csr:
+    path: "{{ cert_path }}/{{ ansible_hostname }}.csr"
+    privatekey_path: "{{ cert_path }}/{{ ansible_hostname }}.pem"
+    country_name: "{{ country_name }}"
+    organization_name: "{{ organization_name }}"
+    email_address: "{{ email_address }}"
+    common_name: "{{ ansible_hostname }}"
+
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:
     path: "{{ cert_path }}/{{ ansible_hostname }}.crt"
@@ -14,15 +30,15 @@
 - name: Copying origin_trail configuration 
   template: 
     src: "templates/origintrail.j2"
-    dest: "{{ origin_trail_user }}/.origintrail_noderc"
+    dest: "/{{ origin_trail_user }}/.origintrail_noderc"
 
 - name: Copy docker-compose template
   template: 
     src: "templates/docker-compose.yml.j2"
-    dest: "{{ origin_trail_user }}/docker-compose.yml"
+    dest: "/{{ origin_trail_user }}/docker-compose.yml"
 
 - name: pulling the origin_trail node images
-  shell: "docker-compose -f {{ origin_trail_user }}/docker-compose.yml pull" 
+  shell: "docker-compose pull" 
 
-#- name: running the origin_trail node 
-#  shell: "docker-compose -f {{ origin_trail_user }}/docker-compose.yml up -d"
+- name: running the origin_trail node 
+  shell: "docker-compose up -d"
