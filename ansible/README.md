@@ -1,5 +1,5 @@
-# Mangata
-This ansible role will install the latest Docker version, Docker Compose and setup docker users, deploy Mangata nodes on Ubuntu.<br/>
+# Origin-Trail
+This ansible role will install the latest Docker version, Docker Compose and setup and deploy Origin Trail nodes on Ubuntu.<br/>
 <br/>
 
 ## Requirements<br/>
@@ -13,15 +13,27 @@ Available variables are listed below, along with variables <br/>
 ansible/vars/main.yml<br/>
 <br/>
 <pre>
-docker_users: [ubuntu]
-mangata_user: "ubuntu"
-mangata_directory_name: "devops"
-mangata_env: "second-interview"
-docker_daemon_options: {}
-deployment_path: /home/{{ mangata_user }}/{{ mangata_directory_name }}
-mangata_image_version: rococo-latest
-stackcomponents:
-  - { name: 'second-interview', path: '{{ deployment_path }}/parachain/env/' }
+origin_trail_user: "root"
+
+required_ports:
+    - 22
+    - 3000
+    - 5278
+    - 8900
+
+cert_path: /{{ origin_trail_user }}/certs
+
+key_size: 4096
+
+key_type: RSA
+
+country_name: DE
+
+email_address: john.bayo@web.de
+
+organization_name: origin-trail
+
+origin_trail_image_version: release_testnet
 </pre>
 <br/>
 
@@ -45,7 +57,7 @@ The playbook is as shown below
   gather_facts: true
   roles:
     - docker
-    - mangata
+    - origin-trail
 </pre>
 <br/>
 
